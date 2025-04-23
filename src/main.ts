@@ -20,7 +20,10 @@ window.Clerk = clerk;
 
 // Wrap async code in a function instead of using top-level await
 (async function initializeClerk() {
-  await window.Clerk?.load();
+  await window.Clerk?.load({
+    isSatellite: true,
+    signInUrl: "https://www.justinwilloughby.dev",
+  });
   
   if (clerk.user) {
     document.getElementById('app')!.innerHTML = `
