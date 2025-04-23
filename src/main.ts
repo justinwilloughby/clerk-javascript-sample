@@ -7,7 +7,6 @@ if (!clerkPubKey) {
   throw new Error('VITE_CLERK_PUBLISHABLE_KEY is not set')
 }
 
-// Properly declare the Clerk type in the Window interface
 declare global {
   interface Window {
     Clerk?: Clerk;
@@ -15,18 +14,18 @@ declare global {
 }
 
 const clerk = new Clerk(clerkPubKey, {
-  domain: "securitysaas.xyz",
+  domain: "securitysaas.xyz", // Satellite domain. Must register in Clerk dashboard.
 });
 
 window.Clerk = clerk;
 
-// Wrap async code in a function instead of using top-level await
 (async function initializeClerk() {
   await window.Clerk?.load({
     isSatellite: true,
-    signInUrl: "https://justinwilloughby.dev",
+    signInUrl: "https://justinwilloughby.dev", // Primary domain sign in page.
   });
   
+  // If user is signed in, show user button.
   if (clerk.user) {
     document.getElementById('app')!.innerHTML = `
       <div id="user-button"></div>
@@ -36,6 +35,7 @@ window.Clerk = clerk;
     
     clerk.mountUserButton(userButtonDiv as HTMLDivElement)
   } else {
+    // If user is not signed in, show sign in button that handles redirect to primary domain.
     document.getElementById('app')!.innerHTML = `
       <button id="sign-in">Sign In</button>
     `
