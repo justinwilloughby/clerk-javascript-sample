@@ -14,7 +14,9 @@ declare global {
   }
 }
 
-const clerk = new Clerk(clerkPubKey);
+const clerk = new Clerk(clerkPubKey, {
+  domain: "https://www.securitysaas.xyz",
+});
 
 window.Clerk = clerk;
 
