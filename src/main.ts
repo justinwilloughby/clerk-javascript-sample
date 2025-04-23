@@ -15,7 +15,7 @@ declare global {
 }
 
 const clerk = new Clerk(clerkPubKey, {
-  domain: "https://securitysaas.xyz",
+  domain: "securitysaas.xyz",
 });
 
 window.Clerk = clerk;
@@ -42,30 +42,9 @@ window.Clerk = clerk;
     
     const signInButton = document.getElementById('sign-in')
 
-    signInButton?.addEventListener('click', async () => {
-      const phoneNumber = "+17652024451";
-
-      await window.Clerk?.client?.signIn.create({
-        strategy: "phone_code",
-        identifier: phoneNumber,
-      })
-
-      // Prompt for code
-      const code = prompt("Enter the code you received:")
-
-      if (!code) {
-        console.error("No code provided")
-        return
-      }
-
-      await window.Clerk?.client?.signIn.attemptFirstFactor({
-        strategy: "phone_code",
-        code,
-      });
-
-      console.log("Signed in")
-    })
-    
+    signInButton?.addEventListener('click', () => {
+      clerk.redirectToSignIn();
+    })    
   }
 })().catch(error => {
   console.error("Failed to initialize Clerk:", error);
