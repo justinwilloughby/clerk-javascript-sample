@@ -15,7 +15,7 @@ declare global {
 }
 
 const clerk = new Clerk(clerkPubKey, {
-  domain: "https://www.securitysaas.xyz",
+  domain: "https://securitysaas.xyz",
 });
 
 window.Clerk = clerk;
@@ -24,7 +24,7 @@ window.Clerk = clerk;
 (async function initializeClerk() {
   await window.Clerk?.load({
     isSatellite: true,
-    signInUrl: "https://www.justinwilloughby.dev",
+    signInUrl: "https://justinwilloughby.dev",
   });
   
   if (clerk.user) {
